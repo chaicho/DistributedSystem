@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
     // create an array of client handles for each worker
     CLIENT *workers[NUM_WORKERS];
     for (int i = 0; i < NUM_WORKERS; i++) {
-        workers[i] = clnt_create(argv[i + 1], TIMER_PROG, TIME_VERS, "udp");
+        workers[i] = clntudp_create(argv[i + 1], TIMER_PROG, TIME_VERS,8081, NULL);
         if (workers[i] == NULL) {
             clnt_pcreateerror(argv[i + 1]);
             exit(1);

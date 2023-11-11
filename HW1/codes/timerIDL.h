@@ -25,6 +25,7 @@ extern  long * get_time_1_svc(void *, struct svc_req *);
 extern  void * set_time_1(long *, CLIENT *);
 extern  void * set_time_1_svc(long *, struct svc_req *);
 extern int timer_prog_1_freeresult (SVCXPRT *, xdrproc_t, caddr_t);
+extern void timer_prog_1(struct svc_req *rqstp, register SVCXPRT *transp);
 
 #else /* K&R C */
 #define GET_TIME 1

@@ -6,7 +6,7 @@
 idl='timerIDL.x'
 
 # generate the stubs and header files
-rpcgen -C $idl
+# rpcgen -C $idl
 
 # compile the manager program
 gcc -o manager manager.c timerIDL_clnt.c 

@@ -16,7 +16,7 @@
 #define SIG_PF void(*)(int)
 #endif
 
-static void
+void
 timer_prog_1(struct svc_req *rqstp, register SVCXPRT *transp)
 {
 	union {
@@ -63,35 +63,35 @@ timer_prog_1(struct svc_req *rqstp, register SVCXPRT *transp)
 	return;
 }
 
-int
-main (int argc, char **argv)
-{
-	register SVCXPRT *transp;
+// int
+// main (int argc, char **argv)
+// {
+// 	register SVCXPRT *transp;
 
-	pmap_unset (TIMER_PROG, TIME_VERS);
+// 	pmap_unset (TIMER_PROG, TIME_VERS);
 
-	transp = svcudp_create(RPC_ANYSOCK);
-	if (transp == NULL) {
-		fprintf (stderr, "%s", "cannot create udp service.");
-		exit(1);
-	}
-	if (!svc_register(transp, TIMER_PROG, TIME_VERS, timer_prog_1, IPPROTO_UDP)) {
-		fprintf (stderr, "%s", "unable to register (TIMER_PROG, TIME_VERS, udp).");
-		exit(1);
-	}
+// 	transp = svcudp_create(1034);
+// 	if (transp == NULL) {
+// 		fprintf (stderr, "%s", "cannot create udp service.");
+// 		exit(1);
+// 	}
+// 	if (!svc_register(transp, TIMER_PROG, TIME_VERS, timer_prog_1, IPPROTO_UDP)) {
+// 		fprintf (stderr, "%s", "unable to register (TIMER_PROG, TIME_VERS, udp).");
+// 		exit(1);
+// 	}
 
-	transp = svctcp_create(RPC_ANYSOCK, 0, 0);
-	if (transp == NULL) {
-		fprintf (stderr, "%s", "cannot create tcp service.");
-		exit(1);
-	}
-	if (!svc_register(transp, TIMER_PROG, TIME_VERS, timer_prog_1, IPPROTO_TCP)) {
-		fprintf (stderr, "%s", "unable to register (TIMER_PROG, TIME_VERS, tcp).");
-		exit(1);
-	}
+// 	transp = svctcp_create(RPC_ANYSOCK, 0, 0);
+// 	if (transp == NULL) {
+// 		fprintf (stderr, "%s", "cannot create tcp service.");
+// 		exit(1);
+// 	}
+// 	if (!svc_register(transp, TIMER_PROG, TIME_VERS, timer_prog_1, IPPROTO_TCP)) {
+// 		fprintf (stderr, "%s", "unable to register (TIMER_PROG, TIME_VERS, tcp).");
+// 		exit(1);
+// 	}
 
-	svc_run ();
-	fprintf (stderr, "%s", "svc_run returned");
-	exit (1);
-	/* NOTREACHED */
-}
+// 	svc_run ();
+// 	fprintf (stderr, "%s", "svc_run returned");
+// 	exit (1);
+// 	/* NOTREACHED */
+// }
