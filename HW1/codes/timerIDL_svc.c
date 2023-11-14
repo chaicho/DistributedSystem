@@ -11,6 +11,7 @@
 #include <memory.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <time.h>
 
 #ifndef SIG_PF
 #define SIG_PF void(*)(int)
@@ -69,6 +70,8 @@ main (int argc, char **argv)
 	register SVCXPRT *transp;
 
 	pmap_unset (TIMER_PROG, TIME_VERS);
+
+	srand(time(NULL));
 
 	transp = svcudp_create(RPC_ANYSOCK);
 	if (transp == NULL) {

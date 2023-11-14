@@ -12,7 +12,7 @@ long *get_time_1_svc(void *argp, struct svc_req *rqstp) {
     // allocate memory for the result
     static long result;
     // update the local clock randomly
-    local_time += rand() % 10;
+    local_time += rand() % 100;
     // set the result to the local clock
     result = local_time;
     // return a pointer to the result

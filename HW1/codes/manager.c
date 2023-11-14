@@ -6,7 +6,6 @@
 
 #define NUM_WORKERS 3 // number of worker nodes
 #define INTERVAL 5 // interval in seconds to collect and send time
-
 // get the average time from an array of long values
 long get_average_time(long times[], int n) {
     long sum = 0;
@@ -17,15 +16,15 @@ long get_average_time(long times[], int n) {
 }
 
 int main(int argc, char *argv[]) {
-    // check the number of arguments
-    if (argc != NUM_WORKERS + 1) {
-        fprintf(stderr, "Usage: %s worker1 worker2 worker3\n", argv[0]);
-        exit(1);
+    if (argc <= 1) {
+        return 0;
     }
+    // get the number of workers from the arguments
+    int num_workers = argc - 1;
 
     // create an array of client handles for each worker
-    CLIENT *workers[NUM_WORKERS];
-    for (int i = 0; i < NUM_WORKERS; i++) {
+    CLIENT *workers[num_workers];
+    for (int i = 0; i < num_workers; i++) {
         workers[i] = clnt_create(argv[i + 1], TIMER_PROG, TIME_VERS, "udp");
         if (workers[i] == NULL) {
             clnt_pcreateerror(argv[i + 1]);
@@ -36,22 +35,23 @@ int main(int argc, char *argv[]) {
     // loop forever
     while (1) {
         // create an array of long values for each worker
-        long times[NUM_WORKERS];
+        requestTime += 1;
+        long times[num_workers];
         // get the time from each worker using RPC
-        for (int i = 0; i < NUM_WORKERS; i++) {
+        for (int i = 0; i < num_workers; i++) {
             long *result = get_time_1(NULL, workers[i]);
             if (result == NULL) {
                 clnt_perror(workers[i], "get_time");
                 exit(1);
             }
             times[i] = *result;
-            printf("Time from worker %d: %ld\n", i + 1, times[i]);
+            printf("Time from worker %s: %ld\n", argv[i+1], times[i]);
         }
         // calculate the average time
-        long avg = get_average_time(times, NUM_WORKERS);
+        long avg = get_average_time(times, num_workers);
         printf("Average time: %ld\n", avg);
         // send the average time to each worker using RPC
-        for (int i = 0; i < NUM_WORKERS; i++) {
+        for (int i = 0; i < num_workers; i++) {
             void *result = set_time_1(&avg, workers[i]);
             if (result == NULL) {
                 clnt_perror(workers[i], "set_time");
@@ -62,4 +62,5 @@ int main(int argc, char *argv[]) {
         sleep(INTERVAL);
     }
     return 0;
+
 }
