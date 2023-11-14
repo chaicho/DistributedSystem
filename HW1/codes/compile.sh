@@ -12,7 +12,7 @@ idl='timerIDL.x'
 gcc -o manager manager.c timerIDL_clnt.c 
 
 # compile the worker program
-gcc -o worker worker.c timerIDL_svc.c 
+gcc -o worker worker.c timerIDL_svc.c -lpthread
 
 # remove the intermediate files
 # rm timerIDL_clnt.c timerIDL_svc.c timerIDL.h timerIDL_xdr.c

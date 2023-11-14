@@ -12,6 +12,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <time.h>
+#include <pthread.h>
 
 #ifndef SIG_PF
 #define SIG_PF void(*)(int)
@@ -64,6 +65,25 @@ timer_prog_1(struct svc_req *rqstp, register SVCXPRT *transp)
 	return;
 }
 
+// Mutex for synchronizing access to the local clock
+pthread_mutex_t clock_mutex = PTHREAD_MUTEX_INITIALIZER;
+int local_clock;
+// Function to update the local clock with a random integer
+void* update_local_clock(void* arg) {
+    while (1) {
+        // Use a mutex to protect the critical section (updating the local clock)
+        pthread_mutex_lock(&clock_mutex);
+        
+        // Update the local clock with a random integer
+        local_clock += rand() % 10;
+        // Release the mutex
+        pthread_mutex_unlock(&clock_mutex);
+        // Sleep for a while before updating again
+        sleep(INTERVAL);  // You can adjust the sleep duration as needed
+    }
+    return NULL;
+}
+
 int
 main (int argc, char **argv)
 {
@@ -92,8 +112,22 @@ main (int argc, char **argv)
 		fprintf (stderr, "%s", "unable to register (TIMER_PROG, TIME_VERS, tcp).");
 		exit(1);
 	}
+    
+    // Start a thread for updating the local clock
+    pthread_t clock_thread;
+    if (pthread_create(&clock_thread, NULL, update_local_clock, NULL) != 0) {
+        fprintf(stderr, "%s", "Error creating clock thread.\n");
+        exit(1);
+    }
 
 	svc_run ();
+
+    // Cleanup: Join the clock thread when the program exits
+    if (pthread_join(clock_thread, NULL) != 0) {
+        fprintf(stderr, "%s", "Error joining clock thread.\n");
+        exit(1);
+    }
+
 	fprintf (stderr, "%s", "svc_run returned");
 	exit (1);
 	/* NOTREACHED */

@@ -16,6 +16,8 @@ extern "C" {
 
 #define TIMER_PROG 0x20000001
 #define TIME_VERS 1
+#define INTERVAL 5 // interval in seconds to collect and send time
+
 
 #if defined(__STDC__) || defined(__cplusplus)
 #define GET_TIME 1
