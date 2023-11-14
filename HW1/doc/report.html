@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>report.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A%E5%9F%BA%E4%BA%8Erpc%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0">实验报告：基于RPC的分布式系统设计与实现</h1>
+<h2 id="1-%E6%A6%82%E8%BF%B0">1. 概述</h2>
+<p>本实验旨在设计一个分布式系统，包含一个管理节点和至少3个工作节点。每个工作节点维护本地时钟，经过一定时间间隔，管理节点收集工作节点的时间，计算平均值，并将结果发送给工作节点，工作节点显示结果。</p>
+<h2 id="2-%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0">2. 设计与实现</h2>
+<h3 id="21-%E6%A6%82%E8%A6%81%E8%AE%BE%E8%AE%A1">2.1 概要设计</h3>
+<p>系统由一个客户端（管理节点）和多个服务端（工作节点）组成。管理节点通过RPC调用获取工作节点维护的时钟，由管理节点进行计算并将结果通过RPC调用发送给工作节点。</p>
+<h3 id="22-%E6%8E%A5%E5%8F%A3%E5%AE%9A%E4%B9%89%E8%AF%AD%E8%A8%80idl">2.2 接口定义语言（IDL）</h3>
+<p>在IDL中定义了以下接口，其中GET_TIME用来获取工作节点的本地时钟，SET_TIME用来将计算得到的平均时钟set到工作节点中：</p>
+<pre class="hljs"><code><div>program TIMER_PROG {
+    version TIME_VERS {
+        long GET_TIME(void) = 1;
+        void SET_TIME(long) = 2;
+    } = 1;
+} = 0x20000001;
+</div></code></pre>
+<h3 id="23-rpc%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90">2.3 RPC代码生成</h3>
+<p>使用rpcgen工具生成对应的clinet和server代码：</p>
+<pre class="hljs"><code><div>rpcgen -C timeIDL.x
+</div></code></pre>
+<h3 id="24-%E7%AE%A1%E7%90%86%E8%8A%82%E7%82%B9%E5%AE%9E%E7%8E%B0">2.4 管理节点实现</h3>
+<ul>
+<li>工作节点创建：
+<ul>
+<li>在命令行中将运行工作节点IP地址作为参数，管理节点获取命令行参数中的IP地址</li>
+<li>通过clnt_create函数为每个工作节点的IP地址创建一个 RPC 客户端句柄</li>
+<li>如此可以实现一个管理节点可以管理无限的工作节点，只需要将ip指定</li>
+</ul>
+</li>
+<li>主循环：
+<ul>
+<li>无限循环执行以下步骤：
+<ul>
+<li>
+<p>时间收集：
+对每个工作节点使用 get_time_1 RPC 函数获取时间信息。</p>
+</li>
+<li>
+<p>平均时间计算：
+使用 get_average_time 函数计算所有工作节点的平均时间。</p>
+</li>
+<li>
+<p>显示和更新：
+打印从每个工作节点接收到的时间和计算得到的平均时间。
+使用 set_time_1 RPC 函数将平均时间发送回每个工作节点。</p>
+</li>
+<li>
+<p>等待间隔：
+使用 sleep(INTERVAL) 等待指定的时间间隔。</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="25-%E5%B7%A5%E4%BD%9C%E8%8A%82%E7%82%B9%E5%AE%9E%E7%8E%B0">2.5 工作节点实现</h3>
+<ul>
+<li>
+<p>本地时钟维护</p>
+<ul>
+<li>创建了一个线程 clock_thread，用于更新本地时钟。</li>
+<li>在 update_local_clock 函数中，使用互斥锁 clock_mutex 保护了临界区，通过生成一个随机整数更新本地时钟变量 local_clock。</li>
+<li>本地时钟 local_clock 的更新使用了一个随机整数，每次更新时加上 (rand() % 10)。这样模拟了一个逐渐递增的本地时钟。</li>
+</ul>
+</li>
+<li>
+<p>RPC函数实现</p>
+<pre><code>  将实现的函数替换rpcgen生成的服务端函数
+</code></pre>
+<ul>
+<li>get_time_1_svc：返回工作节点维护的本地时钟</li>
+<li>set_time_1_svc：设置工作节点的平均时间，并且输出</li>
+</ul>
+</li>
+</ul>
+<h2 id="4-%E5%AE%9E%E9%AA%8C%E6%BC%94%E7%A4%BA">4. 实验演示</h2>
+<h3 id="41-%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%E5%8F%AF%E6%89%A7%E8%A1%8C%E6%96%87%E4%BB%B6">4.1 编译生成可执行文件</h3>
+<pre class="hljs"><code><div># generate the stubs and header files
+# rpcgen -C $idl
+
+# compile the manager program
+gcc -o manager manager.c timerIDL_clnt.c 
+
+# compile the worker program
+gcc -o worker worker.c timerIDL_svc.c -lpthread
+</div></code></pre>
+<h3 id="42-%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83%E6%9E%84%E5%BB%BA">4.2 实验环境构建</h3>
+<ul>
+<li>
+<p>在实验进行的过程中，通过 QEMU 启动了三个 Ubuntu 20.04 虚拟机，每个虚拟机分别分配了独特的 IP 地址：192.168.1.24，192.168.1.26，192.168.1.27</p>
+</li>
+<li>
+<p>首先，通过SCP将worker program复制到每个虚拟机的相应目录下。确保每个虚拟机都能够访问并执行这个程序。</p>
+</li>
+<li>
+<p>随后，在每个虚拟机上下载并运行了 rpcbind，这是一个允许程序动态地绑定到 RPC 服务端口的工具。这是为了确保工作节点程序能够正确地注册到 RPC 服务中，并提供给管理节点使用。</p>
+</li>
+<li>
+<p>在虚拟机准备就绪后，返回到本地机器，运行了管理节点程序 manager。通过在命令行中指定虚拟机的 IP 地址，例如'./manager 192.168.1.24 192.168.1.26 192.168.1.27'，成功地启动了管理节点，该节点可以与这三个工作节点之间进行通信。最终实验结果截图如下</p>
+</li>
+</ul>
+<img src="manager.png" alt="Manager" style="width:50%; height:50%;">
+<img src="worker1.png" alt="Worker 1" style="width:50%; height:50%;">
+<img src="worker2.png" alt="Worker 2" style="width:50%; height:50%;">
+<img src="worker3.png" alt="Worker 3" style="width:50%; height:50%;">
+<pre><code>    值得注意的是，如果希望使用更多的工作节点，只需将额外的 IP 地址继续添加到 manager 程序的命令行参数中。这种设计允许轻松地扩展系统，以适应不同规模和需求的分布式计算环境。通过这一流程，建立了一个具有灵活性和可扩展性的分布式系统，并成功运行了管理节点与多个工作节点之间的协作。
+</code></pre>
+<h1 id="5-%E6%80%BB%E7%BB%93">5. 总结</h1>
+<p>通过本次实验，我成功设计并实现了一个基于RPC的分布式系统，其中管理节点和工作节点通过定义的IDL接口进行RPC通信。这个系统的设计允许在需要的情况下轻松地扩展工作节点的数量，只需将新的 IP 地址添加到命令行参数中即可。通过这次实验，我深入理解了基于RPC的分布式系统的构建和管理。</p>
+
+</body>
+</html>
